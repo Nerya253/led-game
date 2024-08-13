@@ -15,6 +15,12 @@
 int Leds[NUM_OF_LEDS] = {pinLed_G, pinLed_Y, pinLed_B, pinLed_R};
 int Btns[NUM_OF_LEDS] = {pinBtn_G, pinBtn_Y, pinBtn_B, pinBtn_R};
 
+#define WAITING_FOR_START 0
+#define GAME_ACTIVE 1
+#define GAME_SUCCESS 2
+#define GAME_FAILURE 3
+int state = WAITING_FOR_START;
+
 void setup() {
   for (int k = 0; k < NUM_OF_LEDS; k++) {
     pinMode(Leds[k], OUTPUT);
@@ -23,5 +29,4 @@ void setup() {
   pinMode(pinBuzzer, OUTPUT);
   randomSeed(analogRead(A1));
 }
-
 
