@@ -21,6 +21,10 @@ int Btns[NUM_OF_LEDS] = {pinBtn_G, pinBtn_Y, pinBtn_B, pinBtn_R};
 #define GAME_FAILURE 3
 int state = WAITING_FOR_START;
 
+bool ledStates[NUM_OF_LEDS];
+bool buttonPressed[NUM_OF_LEDS];
+bool allButtonsPressed[NUM_OF_LEDS];
+
 void setup() {
   for (int k = 0; k < NUM_OF_LEDS; k++) {
     pinMode(Leds[k], OUTPUT);
@@ -33,7 +37,7 @@ void setup() {
 void loop() {
   switch (state) {
     case WAITING_FOR_START:
-      checkStartButton()ף
+      checkStartButton();
       break;
 
     case GAME_ACTIVE:
@@ -53,9 +57,18 @@ void loop() {
 void checkStartButton() {
   for (int k = 0; k < NUM_OF_LEDS; k++) {
     if (digitalRead(Btns[k]) == LOW) {
-      
-            return;
+
+      return;
     }
+  }
+}
+
+void startGame() {
+  for (int k = 0; k < NUM_OF_LEDS; k++) {
+    digitalWrite(Leds[k], LOW);
+    ledStates[k] = false;
+    buttonPressed[k] = false;
+    allButtonsPressed[k] = false;
   }
 }
 
