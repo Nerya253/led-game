@@ -30,3 +30,19 @@ void setup() {
   randomSeed(analogRead(A1));
 }
 
+void loop() {
+  switch (state) {
+    case WAITING_FOR_START:
+      break;
+
+    case GAME_ACTIVE:
+      break;
+
+    case GAME_SUCCESS:
+      break;
+
+    case GAME_FAILURE:
+      break;
+  }
+}
+
