@@ -33,16 +33,29 @@ void setup() {
 void loop() {
   switch (state) {
     case WAITING_FOR_START:
+      checkStartButton()ף
       break;
 
     case GAME_ACTIVE:
+
       break;
 
     case GAME_SUCCESS:
+
       break;
 
     case GAME_FAILURE:
+
       break;
+  }
+}
+
+void checkStartButton() {
+  for (int k = 0; k < NUM_OF_LEDS; k++) {
+    if (digitalRead(Btns[k]) == LOW) {
+      
+            return;
+    }
   }
 }
 
