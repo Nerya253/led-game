@@ -37,7 +37,7 @@ void setup() {
 void loop() {
   switch (state) {
     case WAITING_FOR_START:
-      checkStartButton();
+      checkStartButton()ף
       break;
 
     case GAME_ACTIVE:
@@ -70,5 +70,21 @@ void startGame() {
     buttonPressed[k] = false;
     allButtonsPressed[k] = false;
   }
-}
 
+  int count = 0;
+  
+  while (count < 3) {
+    int randomIndex = random(NUM_OF_LEDS);
+    if (!ledStates[randomIndex]) {
+      ledStates[randomIndex] = true;
+      count++;
+    }
+  }
+
+  for (int k = 0; k < NUM_OF_LEDS; k++) {
+    if (ledStates[k]) {
+      digitalWrite(Leds[k], HIGH);
+    }
+  }
+  delay(1000);
+}
