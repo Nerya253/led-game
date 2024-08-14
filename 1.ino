@@ -24,7 +24,10 @@ int state = WAITING_FOR_START;
 bool ledStates[NUM_OF_LEDS];
 bool buttonPressed[NUM_OF_LEDS];
 bool allButtonsPressed[NUM_OF_LEDS];
+
 bool firstButtonPressed = false;
+
+unsigned long pressStartTime = 0;
 
 void setup() {
   for (int k = 0; k < NUM_OF_LEDS; k++) {
@@ -58,11 +61,55 @@ void loop() {
 void checkStartButton() {
   for (int k = 0; k < NUM_OF_LEDS; k++) {
     if (digitalRead(Btns[k]) == LOW) {
-
+      startGame();
       return;
     }
   }
 }
+
+void checkButtons() {
+  bool allButtonsCorrect = true;
+
+  for (int k = 0; k < NUM_OF_LEDS; k++) {
+    bool currentPressed = digitalRead(Btns[k]) == LOW;
+
+    if (currentPressed && !buttonPressed[k]) {
+      buttonPressed[k] = true;
+      allButtonsPressed[k] = true; 
+
+      if (!ledStates[k]) {
+        state = GAME_FAILURE;
+        return;
+      }
+      if (!firstButtonPressed) {
+        pressStartTime = millis();  
+        firstButtonPressed = true;
+      }
+    } else if (!currentPressed && buttonPressed[k]) {
+      buttonPressed[k] = false;
+    }
+  }
+
+  if (firstButtonPressed) {
+    unsigned long duration = millis() - pressStartTime;
+
+    if (duration <= 1000) {
+      for (int k = 0; k < NUM_OF_LEDS; k++) {
+        if (ledStates[k] && !allButtonsPressed[k]) {
+          allButtonsCorrect = false;
+          break;
+        }
+      }
+
+      if (allButtonsCorrect) {
+        state = GAME_SUCCESS;
+      }
+    } else {
+      state = GAME_FAILURE;
+    }
+  }
+}
+
 
 void startGame() {
   for (int k = 0; k < NUM_OF_LEDS; k++) {
