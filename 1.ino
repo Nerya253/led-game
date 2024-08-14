@@ -24,6 +24,7 @@ int state = WAITING_FOR_START;
 bool ledStates[NUM_OF_LEDS];
 bool buttonPressed[NUM_OF_LEDS];
 bool allButtonsPressed[NUM_OF_LEDS];
+bool firstButtonPressed = false;
 
 void setup() {
   for (int k = 0; k < NUM_OF_LEDS; k++) {
@@ -86,5 +87,21 @@ void startGame() {
       digitalWrite(Leds[k], HIGH);
     }
   }
+
   delay(1000);
+
+  for (int k = 0; k < NUM_OF_LEDS; k++) {
+    if (ledStates[k]) {
+      digitalWrite(Leds[k], LOW);
+    }
+  }
+
+  delay(500); 
+
+  tone(pinBuzzer, 1000, 200); 
+
+  firstButtonPressed = false;
+
+  state = GAME_ACTIVE;
 }
+
