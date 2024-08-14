@@ -105,3 +105,21 @@ void startGame() {
   state = GAME_ACTIVE;
 }
 
+void Success() {
+  digitalWrite(pinLed_G, HIGH);
+  tone(pinBuzzer, 2000, 500); 
+  delay(1000);
+  digitalWrite(pinLed_G, LOW);
+  state = WAITING_FOR_START;
+}
+
+
+
+
+
+
+
+
+
+
+
